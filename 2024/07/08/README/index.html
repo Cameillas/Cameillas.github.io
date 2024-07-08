@@ -1,0 +1,775 @@
+<!DOCTYPE html><html lang="zn-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>联邦学习 | 红尘客栈</title><meta name="author" content="Cameilla"><meta name="copyright" content="Cameilla"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Federated LearningPart 1: Introduction Federated Learning Comic Federated Learning: Collaborative Machine Learning without Centralized Training Data GDPR, Data Shotrage and AI (AAAI-19) Federated Lear">
+<meta property="og:type" content="article">
+<meta property="og:title" content="联邦学习">
+<meta property="og:url" content="http://example.com/2024/07/08/README/index.html">
+<meta property="og:site_name" content="红尘客栈">
+<meta property="og:description" content="Federated LearningPart 1: Introduction Federated Learning Comic Federated Learning: Collaborative Machine Learning without Centralized Training Data GDPR, Data Shotrage and AI (AAAI-19) Federated Lear">
+<meta property="og:locale" content="zn_CN">
+<meta property="og:image" content="http://example.com/img/2.jpeg">
+<meta property="article:published_time" content="2024-07-08T12:34:13.648Z">
+<meta property="article:modified_time" content="2024-07-08T12:35:58.864Z">
+<meta property="article:author" content="Cameilla">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/2.jpeg"><link rel="shortcut icon" href="/img/logo.jpg"><link rel="canonical" href="http://example.com/2024/07/08/README/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '联邦学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-08 20:35:58'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/styles/main.css"><script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/2.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-file-alt"></i><span> 找文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heartbeat"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></li><li><a class="site-page child" href="/share/"><i class="fa-fw fas fa-share-alt"></i><span> 分享</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 相册</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/FilmAndTV/"><i class="fa-fw fas fa-file"></i><span> 影视</span></a></li><li><a class="site-page child" href="/daohang/"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/1.png')"><nav id="nav"><span id="blog-info"><a href="/" title="红尘客栈"><img class="site-icon" src="/img/logo.jpg"/><span class="site-name">红尘客栈</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-file-alt"></i><span> 找文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heartbeat"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></li><li><a class="site-page child" href="/share/"><i class="fa-fw fas fa-share-alt"></i><span> 分享</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fas fa-image"></i><span> 相册</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/FilmAndTV/"><i class="fa-fw fas fa-file"></i><span> 影视</span></a></li><li><a class="site-page child" href="/daohang/"><i class="fa-fw fas fa-compass"></i><span> 导航站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">联邦学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-08T12:34:13.648Z" title="Created 2024-07-08 20:34:13">2024-07-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-08T12:35:58.864Z" title="Updated 2024-07-08 20:35:58">2024-07-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="联邦学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Federated-Learning"><a href="#Federated-Learning" class="headerlink" title="Federated Learning"></a>Federated Learning</h1><h2 id="Part-1-Introduction"><a href="#Part-1-Introduction" class="headerlink" title="Part 1: Introduction"></a>Part 1: Introduction</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://federated.withgoogle.com/">Federated Learning Comic</a></li>
+<li><a target="_blank" rel="noopener" href="http://ai.googleblog.com/2017/04/federated-learning-collaborative.html">Federated Learning: Collaborative Machine Learning without Centralized Training Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://aaai.org/Conferences/AAAI-19/invited-speakers/#yang">GDPR, Data Shotrage and AI (AAAI-19)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=89BGjQYA0uE">Federated Learning: Machine Learning on Decentralized Data (Google I&#x2F;O’19)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.fedai.org/static/flwp-en.pdf">Federated Learning White Paper V1.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.fastforwardlabs.com/2018/11/14/federated-learning.html">Federated learning: distributed machine learning with data locality and privacy</a></li>
+</ul>
+<h2 id="Part-2-Survey"><a href="#Part-2-Survey" class="headerlink" title="Part 2: Survey"></a>Part 2: Survey</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1908.07873">Federated Learning: Challenges, Methods, and Future Directions</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1907.09693">Federated Learning Systems: Vision, Hype and Reality for Data Privacy and Protection</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.11875">Federated Learning in Mobile Edge Networks: A Comprehensive Survey</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1908.06847">Federated Learning for Wireless Communications: Motivation, Opportunities and Challenges</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.08349.pdf">Convergence of Edge Computing and Deep Learning: A Comprehensive Survey</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.04977.pdf">Advances and Open Problems in Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1902.04885.pdf">Federated Machine Learning: Concept and Applications</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.02133.pdf">Threats to Federated Learning: A Survey</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.08673.pdf">Survey of Personalization Techniques for Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.06217.pdf">SECure: A Social and Environmental Certificate for AI Systems</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.03594.pdf">From Federated Learning to Fog Learning: Towards Large-Scale Distributed Machine Learning in Heterogeneous Wireless Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.02931.pdf">Federated Learning for 6G Communications: Challenges, Methods, and Future Directions</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.11794.pdf">A Review of Privacy Preserving Federated Learning for Private IoT Analytics</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.11545.pdf">Towards Utilizing Unlabeled Data in Federated Learning: A Survey and Prospective</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.10610.pdf">Federated Learning for Resource-Constrained IoT Devices: Panoramas and State-of-the-art</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.04859.pdf">Privacy-Preserving Blockchain Based Federated Learning with Differential Data Sharing</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.01554.pdf">An Introduction to Communication Efficient Edge Machine Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.06270.pdf">Federated Learning for Healthcare Informatics</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.06799.pdf">Federated Learning for Coalition Operations</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.03288.pdf">No Peek: A Survey of private distributed deep learning</a></li>
+<li><a target="_blank" rel="noopener" href="http://arxiv.org/pdf/2002.09668.pdf">Communication-Efficient Edge AI: Algorithms and Systems</a></li>
+</ul>
+<h2 id="Part-3-Benchmarks"><a href="#Part-3-Benchmarks" class="headerlink" title="Part 3: Benchmarks"></a>Part 3: Benchmarks</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.01097">LEAF: A Benchmark for Federated Settings</a>(<a target="_blank" rel="noopener" href="https://github.com/TalwalkarLab/leaf">https://github.com/TalwalkarLab/leaf</a>) [Recommend]</li>
+<li><a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Gregor_Ulm/publication/329106719_A_Performance_Evaluation_of_Federated_Learning_Algorithms/links/5c0fabcfa6fdcc494febf907/A-Performance-Evaluation-of-Federated-Learning-Algorithms.pdf">A Performance Evaluation of Federated Learning Algorithms</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1908.01924">Edge AIBench: Towards Comprehensive End-to-end Edge Computing Benchmarking</a></li>
+</ul>
+<h2 id="Part-4-Converge"><a href="#Part-4-Converge" class="headerlink" title="Part 4: Converge"></a>Part 4: Converge</h2><h3 id="4-1-Model-Aggregation"><a href="#4-1-Model-Aggregation" class="headerlink" title="4.1 Model Aggregation"></a>4.1 Model Aggregation</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1902.11175">One-Shot Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.08234">Federated Learning with Unbiased Gradient Aggregation and Controllable Meta Updating</a> (NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.12022">Bayesian Nonparametric Federated Learning of Neural Networks</a> (ICML 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=dgtpE6gKjHn">FedBE: Making Bayesian Model Ensemble Applicable to Federated Learning</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1902.00146">Agnostic Federated Learning</a> (ICML 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=BkluqlSFDS">Federated Learning with Matched Averaging</a> (ICLR 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1907.01132">Astraea: Self-balancing federated learning for improving classification accuracy of mobile deep learning applications</a></li>
+</ul>
+<h3 id="4-2-Convergence-Research"><a href="#4-2-Convergence-Research" class="headerlink" title="4.2 Convergence Research"></a>4.2 Convergence Research</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://papers.nips.cc/paper/7519-a-linear-speedup-analysis-of-distributed-deep-learning-with-sparse-and-quantized-communication">A Linear Speedup Analysis of Distributed Deep Learning with Sparse and Quantized Communication</a> （NIPS 2018）</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=jDdzh5ul-d">Achieving Linear Speedup with Partial Worker Participation in Non-IID Federated Learning</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.07682.pdf">FetchSGD: Communication-Efficient Federated Learning with Sketching</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.05001">FL-NTK: A Neural Tangent Kernel-based Framework for Federated Learning Convergence Analysis</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v130/shi21c.html">Federated Multi-armed Bandits with Personalization</a> (AISTATS 2021)</li>
+<li><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v130/haddadpour21a.html">Federated Learning with Compression: Unified Analysis and Sharp Guarantees</a> (AISTATS 2021)</li>
+<li><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v130/charles21a.html">Convergence and Accuracy Trade-Offs in Federated Learning and Meta-Learning</a> (AISTATS 2021)</li>
+<li><a href="">Towards Flexible Device Participation in Federated Learning</a> (AISTATS 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3447548.3467309">Fed2: Feature-Aligned Federated Learning</a> (KDD 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.06127">Federated Optimization for Heterogeneous Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1907.02189">On the Convergence of FedAvg on Non-IID Data</a> <a target="_blank" rel="noopener" href="https://openreview.net/forum?id=HJxNAnVtDS">[OpenReview]</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.09126">Communication Efficient Decentralized Training with Multiple Local Updates</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.09767">Local SGD Converges Fast and Communicates Little</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.00643">SlowMo: Improving Communication-Efficient Distributed SGD with Slow Momentum</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1807.06629">Parallel Restarted SGD with Faster Convergence and Less Communication: Demystifying Why Model Averaging Works for Deep Learning</a> (AAAI 2018）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.03817">On the Linear Speedup Analysis of Communication Efficient Momentum SGD for Distributed Non-Convex Optimization</a> (ICML 2019）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1811.11479">Communication-efficient on-device machine learning: Federated distillation and augmentation under non-iid private data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.12648">Convergence of Distributed Stochastic Variance Reduced Methods without Sampling Extra Data</a> （NIPS 2019 Workshop)</li>
+</ul>
+<h3 id="4-3-Statistical-Heterogeneity"><a href="#4-3-Statistical-Heterogeneity" class="headerlink" title="4.3 Statistical Heterogeneity"></a>4.3 Statistical Heterogeneity</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.11418.pdf">FedPD: A Federated Learning Framework with Optimal Rates andAdaptivity to Non-IID Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=6YEQUn0QICG">FedBN: Federated Learning on Non-IID Features via Local Batch Normalization</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=Ogga20D2HO-">FedMix: Approximation of Mixup under Mean Augmented Federated Learning</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=TNkPBBYFkXg">HeteroFL: Computation and Communication Efficient Federated Learning for Heterogeneous Clients</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3447548.3467254">FedRS: Federated Learning with Restricted Softmax for Label Distribution Non-IID Data</a> (KDD 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3459637.3482345">FedMatch: Federated Learning Over Heterogeneous Question Answering Data</a> (CIKM 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.09684.pdf">Decentralized Learning of Generative Adversarial Networks from Non-iid Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2008.06217.pdf">Towards Class Imbalance in Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.11479v1.pdf">Communication-Efficient On-Device Machine Learning:Federated Distillation and Augmentationunder Non-IID Private Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.07481.pdf">Tackling the Objective Inconsistency Problem in Heterogeneous Federated Optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.02054">Federated Adversarial Domain Adaptation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.10342.pdf">Federated Learning with Only Positive Labels</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1806.00582">Federated Learning with Non-IID Data</a> </li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.00189">The Non-IID Data Quagmire of Decentralized Machine Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1903.02891">Robust and Communication-Efficient Federated Learning from Non-IID Data</a> (IEEE transactions on neural networks and learning systems)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.03581">FedMD: Heterogenous Federated Learning via Model Distillation</a> (NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.04715">First Analysis of Local GD on Heterogeneous Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.06378">SCAFFOLD: Stochastic Controlled Averaging for On-Device Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.12488">Improving Federated Learning Personalization via Model Agnostic Meta Learning</a> (NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=ehJqJQk9cw">Personalized Federated Learning with First Order Model Optimization</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.12629">LoAdaBoost: Loss-Based AdaBoost Federated Machine Learning on Medical Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=SJeOAJStwB">On Federated Learning of Deep Networks from Non-IID Data: Parameter Divergence and the Effects of Hyperparametric Methods</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.07796">Overcoming Forgetting in Federated Learning on Non-IID Data</a> （NIPS 2019 Workshop)</li>
+<li><a href="#workshop">FedMAX: Activation Entropy Maximization Targeting Effective Non-IID Federated Learning</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.00295.pdf">Adaptive Federated Optimization.</a>(ICLR 2021 (Under Review))</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1707.01155.pdf">Stochastic, Distributed and Federated Optimization for Machine Learning. FL PhD Thesis. By Jakub</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.07880.pdf">Collaborative Deep Learning in Fixed Topology Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.09637.pdf">FedCD: Improving Performance in non-IID Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.10937.pdf">Life Long Learning: FedFMC: Sequential Efficient Federated Learning on Non-iid Data.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.08907.pdf">Robust Federated Learning: The Case of Affine Distribution Shifts.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.07078">Exploiting Shared Representations for Personalized Federated Learning</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2103.04628">Personalized Federated Learning using Hypernetworks</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://onikle.com/articles/359482">Ditto: Fair and Robust Federated Learning Through Personalization</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.10056">Data-Free Knowledge Distillation for Heterogeneous Federated Learning</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.03198">Bias-Variance Reduced Local SGD for Less Heterogeneous Federated Learning</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2103.00697">Heterogeneity for the Win: One-Shot Federated Clustering</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.05883">Clustered Sampling: Low-Variance and Improved Representativity for Clients Selection in Federated Learning</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.04635">Federated Deep AUC Maximization for Hetergeneous Data with a Constant Communication Complexity</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.08776">Federated Learning of User Verification Models Without Sharing Embeddings</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2103.03228">One for One, or All for All: Equilibria and Optimality of Collaboration in Federated Learning</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.07242.pdf">Ensemble Distillation for Robust Model Fusion in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.05148.pdf">XOR Mixup: Privacy-Preserving Data Augmentation for One-Shot Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.04088.pdf">An Efficient Framework for Clustered Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.12657.pdf">Continual Local Training for Better Initialization of Federated Models.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.11418.pdf">FedPD: A Federated Learning Framework with Optimal Rates and Adaptivity to Non-IID Data.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.10848.pdf">Global Multiclass Classification from Heterogeneous Local Models.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.01026.pdf">Multi-Center Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=ce6CFXBh30h">Federated Semi-Supervised Learning with Inter-Client Consistency &amp; Disjoint Learning</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.03657.pdf">(*) FedMAX: Mitigating Activation Divergence for Accurate and Communication-Efficient Federated Learning. CMU ECE.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.13461.pdf">(*) Adaptive Personalized Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.12795.pdf">Semi-Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.11223.pdf">Device Heterogeneity in Federated Learning: A Superquantile Approach.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.10671.pdf">Personalized Federated Learning for Intelligent IoT Applications: A Cloud-Edge based Framework</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.10619.pdf">Three Approaches for Personalization with Applications to Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.07948.pdf">Personalized Federated Learning: A Meta-Learning Approach</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.05038.pdf">Towards Federated Learning: Robustness Analytics to Data Heterogeneity</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.04758.pdf">Salvaging Federated Learning by Local Adaptation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.11359.pdf">FOCUS: Dealing with Label Quality Disparity in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.08300.pdf">Overcoming Noisy and Irrelevant Data in Federated Learning.</a>(ICPR 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.03229.pdf">Real-Time Edge Intelligence in the Making: A Collaborative Learning Framework via Federated Meta-Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.01523.pdf">(*) Think Locally, Act Globally: Federated Learning with Local and Global Representations. NeurIPS 2019 Workshop on Federated Learning distinguished student paper award</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.00818.pdf">Federated Learning with Personalization Layers</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.10252.pdf">Federated Evaluation of On-device Personalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.08525.pdf">Measure Contribution of Participants in Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.06335.pdf">(*) Measuring the Effects of Non-Identical Data Distribution for Federated Visual Classification</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.06426.pdf">Multi-hop Federated Private Data Augmentation with Sample Compression</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.01736.pdf">Distributed Training with Heterogeneous Data: Bridging Median- and Mean-Based Algorithms</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1902.08999.pdf">High Dimensional Restrictive Federated Model Selection with multi-objective Bayesian Optimization over shifted distributions</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.13075.pdf">Robust Federated Learning Through Representation Matching and Adaptive Hyper-parameters</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.12326.pdf">Towards Efficient Scheduling of Federated Mobile Devices under Computational and Statistical Heterogeneity</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.04806.pdf">Client Adaptation improves Federated Learning with Simulated Non-IID Clients</a></li>
+</ul>
+<h3 id="4-4-Adaptive-Aggregation"><a href="#4-4-Adaptive-Aggregation" class="headerlink" title="4.4 Adaptive Aggregation"></a>4.4 Adaptive Aggregation</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://link.springer.com.remotexs.ntu.edu.sg/chapter/10.1007/978-3-030-14880-5_2">Asynchronous Federated Learning for Geospatial Applications</a> (ECML PKDD Workshop 2018） </li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1903.03934">Asynchronous Federated Optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.05271">Adaptive Federated Learning in Resource Constrained Edge Computing Systems</a> (IEEE Journal on Selected Areas in Communications, 2019）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.06387">The Distributed Discrete Gaussian Mechanism for Federated Learning with Secure Aggregation</a> (ICML 2021)</li>
+</ul>
+<h2 id="Part-5-Security"><a href="#Part-5-Security" class="headerlink" title="Part 5: Security"></a>Part 5: Security</h2><h3 id="5-1-Adversarial-Attacks"><a href="#5-1-Adversarial-Attacks" class="headerlink" title="5.1 Adversarial Attacks"></a>5.1 Adversarial Attacks</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.07963">Can You Really Backdoor Federated Learning? </a>(NeruIPS 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://dais-ita.org/sites/default/files/main_secml_model_poison.pdf">Model Poisoning Attacks in Federated Learning</a> (NIPS workshop 2018）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.04676.pdf">An Overview of Federated Deep Learning Privacy Attacks and Defensive Strategies.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1807.00459.pdf">How To Backdoor Federated Learning.</a>(AISTATS 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1702.07464.pdf">Deep Models Under the GAN: Information Leakage from Collaborative Deep Learning.</a>(ACM CCS 2017)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.01498.pdf">Byzantine-Robust Distributed Learning: Towards Optimal Statistical Rates</a></li>
+<li><a target="_blank" rel="noopener" href="https://papers.nips.cc/paper/9617-deep-leakage-from-gradients.pdf">Deep Leakage from Gradients.</a>(NIPS 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.00910.pdf">Comprehensive Privacy Analysis of Deep Learning: Passive and Active White-box Inference Attacks against Centralized and Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.00535.pdf">Beyond Inferring Class Representatives: User-Level Privacy Leakage From Federated Learning.</a>(INFOCOM 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.12470.pdf">Analyzing Federated Learning through an Adversarial Lens.</a>(ICML 2019）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1808.04866.pdf">Mitigating Sybils in Federated Learning Poisoning.</a>(RAID 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1811.03761">RSA: Byzantine-Robust Stochastic Aggregation Methods for Distributed Learning from Heterogeneous Datasets.</a>(AAAI 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.10397.pdf">A Framework for Evaluating Gradient Leakage Attacks in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.11815.pdf">Local Model Poisoning Attacks to Byzantine-Robust Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.07026.pdf">Backdoor Attacks on Federated Meta-Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.04986.pdf">Towards Realistic Byzantine-Robust Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.10020.pdf">Data Poisoning Attacks on Federated Machine Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.12571.pdf">Exploiting Defenses against GAN-Based Feature Inference Attacks in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.13041.pdf">Byzantine-Resilient High-Dimensional SGD with Local Iterations on Heterogeneous Data.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.11489.pdf">FedMGDA+: Federated Learning meets Multi-objective Optimization.</a></li>
+<li><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v130/fraboni21a.html">Free-rider Attacks on Model Aggregation in Federated Learning</a> (AISTATS 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.15632.pdf">FDA3 : Federated Defense Against Adversarial Attacks for Cloud-Based IIoT Applications.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.07630.pdf">Privacy-preserving Weighted Federated Learning within Oracle-Aided MPC Framework.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.00937.pdf">BASGD: Buffered Asynchronous SGD for Byzantine Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.10940.pdf">Stochastic-Sign SGD for Federated Learning with Theoretical Guarantees.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.00211.pdf">Learning to Detect Malicious Clients for Robust Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.13445.pdf">Robust Aggregation for Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.12370.pdf">Towards Deep Federated Defenses Against Malware in Cloud Ecosystems.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.11464.pdf">Attack-Resistant Federated Learning with Residual-based Reweighting.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.12560.pdf">Free-riders in Federated Learning: Attacks and Defenses.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.00251.pdf">Robust Federated Learning with Noisy Communication.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.09933.pdf">Abnormal Client Behavior Detection in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.06044.pdf">Eavesdrop the Composition Proportion of Training Labels in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.05125.pdf">Byzantine-Robust Federated Machine Learning through Adaptive Model Averaging.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1908.08340.pdf">An End-to-End Encrypted Neural Network for Gradient Updates Transmission in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.00887.pdf">Secure Distributed On-Device Learning Networks With Byzantine Adversaries.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.02941.pdf">Robust Federated Training via Collaborative Machine Teaching using Trusted Instances.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.09712.pdf">Dancing in the Dark: Private Multi-Party Machine Learning in an Untrusted Setting.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.14053.pdf">Inverting Gradients - How easy is it to break privacy in federated learning?</a></li>
+</ul>
+<h3 id="5-2-Data-Privacy-and-Confidentiality"><a href="#5-2-Data-Privacy-and-Confidentiality" class="headerlink" title="5.2 Data Privacy and Confidentiality"></a>5.2 Data Privacy and Confidentiality</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.05838">Gradient-Leaks: Understanding and Controlling Deanonymization in Federated Learning</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.05467.pdf">Quantification of the Leakage in Federated Learning</a></li>
+</ul>
+<h2 id="Part-6-Communication-Efficiency"><a href="#Part-6-Communication-Efficiency" class="headerlink" title="Part 6: Communication Efficiency"></a>Part 6: Communication Efficiency</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1602.05629">Communication-Efficient Learning of Deep Networks from Decentralized Data</a>](<a target="_blank" rel="noopener" href="https://github.com/roxanneluo/Federated-Learning">https://github.com/roxanneluo/Federated-Learning</a>) [Google] <strong>[Must Read]</strong></li>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8698609">Two-Stream Federated Learning: Reduce the Communication Costs</a> (2018 IEEE VCIP)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=B7v4QMR6Z9w">Federated Learning Based on Dynamic Regularization</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=GFsU8a0sGB">Federated Learning via Posterior Averaging: A New Perspective and Practical Algorithms</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=LkFG3lB13U5">Adaptive Federated Optimization</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.13727">PowerSGD: Practical Low-Rank Gradient Compression for Distributed Optimization</a> （NIPS 2019）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1712.01887">Deep Gradient Compression: Reducing the Communication Bandwidth for Distributed Training</a> (ICLR 2018)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.05350">The Error-Feedback Framework: Better Rates for SGD with Delayed Gradients and Compressed Communication</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1912.11187">A Communication Efficient Collaborative Learning Framework for Distributed Features</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.12641">Active Federated Learning</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.05844">Communication-Efficient Distributed Optimization in Networks with Gradient Tracking and Variance Reduction</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.04716">Gradient Descent with Compressed Iterates</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.09965">LAG: Lazily Aggregated Gradient for Communication-Efficient Distributed Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.12583.pdf">Exact Support Recovery in Federated Regression with One-shot Communication</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.11401.pdf">DEED: A General Quantization Scheme for Communication Efficiency in Bits</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.08848.pdf">Personalized Federated Learning with Moreau Envelopes</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.06954.pdf">Towards Flexible Device Participation in Federated Learning for Non-IID Data.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.03474.pdf">A Primal-Dual SGD Algorithm for Distributed Nonconvex Optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.05238.pdf">FedSplit: An algorithmic framework for fast federated optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.00224.pdf">Distributed Stochastic Non-Convex Optimization: Momentum-Based Variance Reduction</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.00878.pdf">On the Outsized Importance of Learning Rates in Local Update Methods.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.01154.pdf">Federated Learning with Compression: Unified Analysis and Sharp Guarantees.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.01442.pdf">From Local SGD to Local Fixed-Point Methods for Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.12880.pdf">Federated Residual Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.11364.pdf">Acceleration for Compressed Gradient Descent in Distributed and Federated Optimization.</a>[ICML 2020]</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.08333">Client Selection for Federated Learning with Heterogeneous Resources in Mobile Edge</a> (FedCS)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.07210">Hybrid-FL for Wireless Networks: Cooperative Learning Mechanism Using Non-IID Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.11360.pdf">LASG: Lazily Aggregated Stochastic Gradients for Communication-Efficient Distributed Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.08958.pdf">Uncertainty Principle for Communication Compression in Distributed and Federated Learning and the Search for an Optimal Compressor</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.08782.pdf">Dynamic Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.07454.pdf">Distributed Optimization over Block-Cyclic Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2011.08474">Federated Composite Optimization</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.07399.pdf">Distributed Non-Convex Optimization with Sublinear Speedup under Intermittent Client Availability</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.05516.pdf">Federated Learning of a Mixture of Global and Local Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.02090.pdf">Faster On-Device Training Using New Federated Momentum Algorithm</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.01920.pdf">FedDANE: A Federated Newton-Type Method</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.09925.pdf">Distributed Fixed Point Methods with Compressed Iterates</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.08546.pdf">Primal-dual methods for large-scale and distributed convex optimization and data analytics</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.06036.pdf">Parallel Restarted SPIDER - Communication Efficient Distributed Nonconvex Optimization with Optimal Computation Complexity</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.05571.pdf">Representation of Federated Learning via Worst-Case Robust Optimization Theory</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.14425.pdf">On the Convergence of Local Descent Methods in Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.06378.pdf">SCAFFOLD: Stochastic Controlled Averaging for Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.03197.pdf">Accelerating Federated Learning via Momentum Gradient Descent</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.06629.pdf">Robust Federated Learning in a Heterogeneous Environment</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.08320.pdf">Scalable and Differentially Private Distributed Aggregation in the Shuffled Model</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.03871.pdf">Differentially Private Learning with Adaptive Clipping</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.10120.pdf">Semi-Cyclic Stochastic Gradient Descent</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.06127.pdf">Federated Optimization in Heterogeneous Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.11206.pdf">Partitioned Variational Inference: A unified framework encompassing federated and continual learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1809.03832.pdf">Learning Rate Adaptation for Federated and Differentially Private Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.09992.pdf">Communication-Efficient Robust Federated Learning Over Heterogeneous Datasets</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1808.07217.pdf">Don’t Use Large Mini-Batches, Use Local SGD</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.09539.pdf">Overlap Local-SGD: An Algorithmic Approach to Hide Communication Delays in Distributed SGD</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.02582.pdf">Local SGD With a Communication Overhead Depending Only on the Number of Workers</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.08950.pdf">Federated Accelerated Stochastic Gradient Descent</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.04746.pdf">Tighter Theory for Local SGD on Identical and Heterogeneous Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.06377.pdf">STL-SGD: Speeding Up Local SGD with Stagewise Communication Period</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1808.07576.pdf">Cooperative SGD: A unified Framework for the Design and Analysis of Communication-Efficient SGD Algorithms</a></li>
+<li><a target="_blank" rel="noopener" href="http://arxiv.org/pdf/2006.07490.pdf">Understanding Unintended Memorization in Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/hotedge18/presentation/tao">eSGD: Communication Efficient Distributed Deep Learning on the Edge</a> (USENIX 2018 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="http://home.cse.ust.hk/~lwangbm/CMFL.pdf">CMFL: Mitigating Communication Overhead for Federated Learning</a></li>
+</ul>
+<h3 id="6-1-Compression"><a href="#6-1-Compression" class="headerlink" title="6.1 Compression"></a>6.1 Compression</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.07210">Expanding the Reach of Federated Learning by Reducing Client Resource Requirements</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1610.05492">Federated Learning: Strategies for Improving Communication Efficiency</a> （NIPS2016 Workshop) [Google]</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.10988">Natural Compression for Distributed Deep Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.13014">FedPAQ: A Communication-Efficient Federated Learning Method with Periodic Averaging and Quantization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1806.04090">ATOMO: Communication-efficient Learning via Atomic Sparsification</a>(NIPS 2018）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.07971">vqSGD: Vector Quantized Stochastic Gradient Descent</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1610.02132">QSGD: Communication-efficient SGD via gradient quantization and encoding</a> （NIPS 2017)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1610.02527">Federated Optimization: Distributed Machine Learning for On-Device Intelligence</a> [Google]</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1611.00429">Distributed Mean Estimation with Limited Communication</a> (ICML 2017)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1611.07555">Randomized Distributed Mean Estimation: Accuracy vs Communication</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1901.09847">Error Feedback Fixes SignSGD and other Gradient Compression Schemes</a> (ICML 2019）</li>
+<li><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v70/zhang17e.html">ZipML: Training Linear Models with End-to-End Low Precision, and a Little Bit of Deep Learning</a> (ICML 2017)</li>
+</ul>
+<h2 id="Part-7-Personalized-Federated-Learning"><a href="#Part-7-Personalized-Federated-Learning" class="headerlink" title="Part 7: Personalized Federated Learning"></a>Part 7: Personalized Federated Learning</h2><h3 id="7-1-Meta-Learning"><a href="#7-1-Meta-Learning" class="headerlink" title="7.1 Meta Learning"></a>7.1 Meta Learning</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1802.07876">Federated Meta-Learning with Fast Convergence and Efficient Communication</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/Federated-Meta-Learning-for-Recommendation-Chen-Dong/8e21d353ba283bee8fd18285558e5e8df39d46e8#paper-header">Federated Meta-Learning for Recommendation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.02717">Adaptive Gradient-Based Meta-Learning Methods</a></li>
+</ul>
+<h3 id="7-2-Multi-task-Learning"><a href="#7-2-Multi-task-Learning" class="headerlink" title="7.2 Multi-task Learning"></a>7.2 Multi-task Learning</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1705.10467">MOCHA: Federated Multi-Task Learning</a> (NIPS 2017)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.06268">Variational Federated Multi-Task Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://mlsys.org/Conferences/2019/doc/2018/30.pdf">Federated Kernelized Multi-Task Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.01991">Clustered Federated Learning: Model-Agnostic Distributed Multi-Task Optimization under Privacy Constraints</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.13460.pdf">Local Stochastic Approximation: A Unified View of Federated Learning and Distributed Multi-Task Reinforcement Learning Algorithms</a></li>
+</ul>
+<h3 id="7-3-Hierarchical-FL"><a href="#7-3-Hierarchical-FL" class="headerlink" title="7.3 Hierarchical FL"></a>7.3 Hierarchical FL</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.06641.pdf">Client-Edge-Cloud Hierarchical Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.01647.pdf">(FL startup: Tongdun, HangZhou, China) Knowledge Federation: A Unified and Hierarchical Privacy-Preserving AI Framework.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.11343.pdf">HFEL: Joint Edge Association and Resource Allocation for Cost-Efficient Hierarchical Federated Edge Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.02362.pdf">Hierarchical Federated Learning Across Heterogeneous Cellular Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.11361.pdf">Enhancing Privacy via Hierarchical Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.11791.pdf">Federated learning with hierarchical clustering of local updates to improve training on non-IID data.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.00638.pdf">Federated Hierarchical Hybrid Networks for Clickbait Detection</a></li>
+</ul>
+<h3 id="7-4-Transfer-Learning"><a href="#7-4-Transfer-Learning" class="headerlink" title="7.4 Transfer Learning"></a>7.4 Transfer Learning</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.03337.pdf">Secure Federated Transfer Learning. IEEE Intelligent Systems 2018.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.13271.pdf">Secure and Efficient Federated Transfer Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.02745.pdf">Wireless Federated Distillation for Distributed Edge Learning with Heterogeneous Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.06105.pdf">Proxy Experience Replay: Federated Distillation for Distributed Reinforcement Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.01337.pdf">Cooperative Learning via Federated Distillation over Fading Channels</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.11279.pdf">(*) Cronus: Robust and Heterogeneous Collaborative Learning with Black-Box Knowledge Transfer</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.06536.pdf">Federated Reinforcement Distillation with Proxy Experience Memory</a></li>
+<li><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=xWr8qQCJU3m">Federated Continual Learning with Weighted Inter-client Transfer</a> (ICML 2021)</li>
+</ul>
+<h2 id="Part-8-Decentralization-Incentive-Mechanism"><a href="#Part-8-Decentralization-Incentive-Mechanism" class="headerlink" title="Part 8 Decentralization &amp; Incentive Mechanism"></a>Part 8 Decentralization &amp; Incentive Mechanism</h2><h3 id="8-1-Decentralized"><a href="#8-1-Decentralized" class="headerlink" title="8.1 Decentralized"></a>8.1 Decentralized</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.06443">Communication Compression for Decentralized Training</a> （NIPS 2018）</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1907.07346">𝙳𝚎𝚎𝚙𝚂𝚚𝚞𝚎𝚎𝚣𝚎: Decentralization Meets Error-Compensated Compression</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.04956.pdf">Central Server Free Federated Learning over Single-sided Trust Social Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1705.09056.pdf">Can Decentralized Algorithms Outperform Centralized Algorithms? A Case Study for Decentralized Parallel Stochastic Gradient Descent</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.00797.pdf">Multi-consensus Decentralized Accelerated Gradient Descent</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.10466.pdf">Decentralized Bayesian Learning over Graphs.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.06731.pdf">BrainTorrent: A Peer-to-Peer Environment for Decentralized Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.09904.pdf">Biscotti: A Ledger for Private and Secure Peer-to-Peer Machine Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.09435.pdf">Matcha: Speeding Up Decentralized SGD via Matching Decomposition Sampling</a></li>
+</ul>
+<h3 id="8-2-Incentive-Mechanism"><a href="#8-2-Incentive-Mechanism" class="headerlink" title="8.2 Incentive Mechanism"></a>8.2 Incentive Mechanism</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8832210">Incentive Mechanism for Reliable Federated Learning: A Joint Optimization Approach to Combining Reputation and Contract Theory</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3447548.3470814">Towards Fair Federated Learning</a> (KDD 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3447548.3467281">Federated Adversarial Debiasing for Fair and Transferable Representations</a> (KDD 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1908.03092">Motivating Workers in Federated Learning: A Stackelberg Game Perspective</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.07479">Incentive Design for Efficient Federated Learning in Mobile Networks: A Contract Theory Approach</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.10497v1.pdf">Fair Resource Allocation in Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.09699.pdf">FMore: An Incentive Scheme of Multi-dimensional Auction for Federated Learning in MEC.</a>(ICDCS 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.06370.pdf">Toward an Automated Auction Framework for Wireless Federated Learning Services Market</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.05642.pdf">Federated Learning for Edge Networks: Resource Optimization and Incentive Mechanism</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.u-aizu.ac.jp/~pengli/files/fl_incentive_iot.pdf">A Learning-based Incentive Mechanism forFederated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.01046.pdf">A Crowdsourcing Framework for On-Device Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1908.11598">Rewarding High-Quality Data via Influence Functions</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1811.12082">Joint Service Pricing and Cooperative Relay Communication for Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.08525">Measure Contribution of Participants in Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2018/679.pdf">DeepChain: Auditable and Privacy-Preserving Deep Learning with Blockchain-based Incentive</a></li>
+</ul>
+<h2 id="Part-9-Vertical-Federated-Learning"><a href="#Part-9-Vertical-Federated-Learning" class="headerlink" title="Part 9: Vertical Federated Learning"></a>Part 9: Vertical Federated Learning</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1912.00513">A Quasi-Newton Method Based Vertical Federated Learning Framework for Logistic Regression</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1901.08755.pdf">SecureBoost: A Lossless Federated Learning Framework</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.09824.pdf">Parallel Distributed Logistic Regression for Vertical Federated Learning without Third-Party Coordinator</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3447548.3467169">AsySQN: Faster Vertical Federated Learning Algorithms with Better Computation Resource Utilization</a> (KDD 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3459637.3482361">Large-scale Secure XGB for Vertical Federated Learning</a> (CIKM 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1711.10677.pdf">Private federated learning on vertically partitioned data via entity resolution and additively homomorphic encryption</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.04035.pdf">Entity Resolution and Federated Learning get a Federated Resolution.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.11154.pdf">Multi-Participant Multi-Class Vertical Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.11187.pdf">A Communication-Efficient Collaborative Learning Framework for Distributed Features</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.07427.pdf">Asymmetrical Vertical Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2007.06081">VAFL: a Method of Vertical Asynchronous Federated Learning</a> (ICML workshop on FL, 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2004.12088v2">SplitFed: When Federated Learning Meets Split Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.13212">Privacy Enhanced Multimodal Neural Representations for Emotion Recognition</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1709.06161">PrivyNet: A Flexible Framework for Privacy-Preserving Deep Neural Network Training</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.01682">One Pixel Image and RF Signal Based Split Learning for mmWave Received Power Prediction</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.06415">Stochastic Distributed Optimization for Machine Learning from Decentralized Features</a></li>
+</ul>
+<h3 id="Part-10-Wireless-Communication-and-Cloud-Computing"><a href="#Part-10-Wireless-Communication-and-Cloud-Computing" class="headerlink" title="Part 10: Wireless Communication and Cloud Computing"></a>Part 10: Wireless Communication and Cloud Computing</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.09801.pdf">Mix2FLD: Downlink Federated Learning After Uplink Federated Distillation With Two-Way Mixup</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.02499.pdf">Wireless Communications for Collaborative Federated Learning in the Internet of Things</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.00641.pdf">Democratizing the Edge: A Pervasive Edge Computing Framework</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.03262.pdf">UVeQFed: Universal Vector Quantization for Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.09969.pdf">Federated Deep Learning Framework For Hybrid Beamforming in mm-Wave Massive MIMO</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.07776.pdf">Efficient Federated Learning over Multiple Access Channel with Differential Privacy Constraints</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.05752.pdf">A Secure Federated Learning Framework for 5G Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.05265.pdf">Federated Learning and Wireless Communications</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.03977.pdf">Lightwave Power Transfer for Federated Learning-based Wireless Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.13563.pdf">Towards Ubiquitous AI in 6G with Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.09168.pdf">Optimizing Over-the-Air Computation in IRS-Aided C-RAN Systems</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.08488.pdf">Network-Aware Optimization of Distributed Learning for Fog Computing</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.07351.pdf">On the Design of Communication Efficient Federated Learning over Wireless Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.05843.pdf">Federated Machine Learning for Intelligent IoT via Reconfigurable Intelligent Surface</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.04314.pdf">Client Selection and Bandwidth Allocation in Wireless Federated Learning Networks: A Long-Term Perspective</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.04104.pdf">Resource Management for Blockchain-enabled Federated Learning: A Deep Reinforcement Learning Approach</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.00773.pdf">A Blockchain-based Decentralized Federated Learning Framework with Committee Consensus</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.00490.pdf">Scheduling for Cellular Federated Edge Learning with Importance and Channel.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.12705.pdf">Differentially Private Federated Learning for Resource-Constrained Internet of Things.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.09375.pdf">Federated Learning for Task and Resource Allocation in Wireless High Altitude Balloon Networks.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.08059.pdf">Gradient Estimation for Federated Learning over Massive MIMO Communication Systems</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.01344.pdf">Adaptive Federated Learning With Gradient Compression in Uplink NOMA</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.00229.pdf">Performance Analysis and Optimization in Privacy-Preserving Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.00199.pdf">Energy-Efficient Federated Edge Learning with Joint Communication and Computation Design</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.12873.pdf">Federated Over-the-Air Subspace Learning and Tracking from Incomplete Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.12507.pdf">Decentralized Federated Learning via SGD over Wireless D2D Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.08196.pdf">Federated Learning in the Sky: Joint Power Allocation and Scheduling with UAV Swarms</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.05151.pdf">Wireless Federated Learning with Local Differential Privacy</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.01337.pdf">Federated Learning under Channel Uncertainty: Joint Client Scheduling and Resource Allocation.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.11567.pdf">Learning from Peers at the Wireless Edge</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.10402.pdf">Convergence of Update Aware Device Scheduling for Federated Learning at the Wireless Edge</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.08737.pdf">Communication Efficient Federated Learning over Multiple Access Channels</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.07845.pdf">Convergence Time Optimization for Federated Learning over Wireless Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.05713.pdf">One-Bit Over-the-Air Aggregation for Communication-Efficient Federated Edge Learning: Design and Convergence Analysis</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.13163.pdf">Federated Learning with Cooperating Devices: A Consensus Approach for Massive IoT Networks.</a>(IEEE Internet of Things Journal. 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.07902.pdf">Asynchronous Federated Learning with Differential Privacy for Edge Intelligence</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.06273.pdf">Federated learning with multichannel ALOHA</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.00131.pdf">Federated Learning with Autotuned Communication-Efficient Secure Aggregation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.07615.pdf">Bandwidth Slicing to Boost Federated Learning in Edge Computing</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.02417.pdf">Energy Efficient Federated Learning Over Wireless Communication Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.00856.pdf">Device Scheduling with Fast Convergence for Wireless Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.00188.pdf">Energy-Aware Analog Aggregation for Federated Learning with Redundant Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.14648.pdf">Age-Based Scheduling Policy for Federated Learning in Mobile Edge Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.13067.pdf">Federated Learning over Wireless Networks: Convergence Analysis and Resource Allocation</a></li>
+<li><a target="_blank" rel="noopener" href="http://networking.khu.ac.kr/layouts/net/publications/data/2019)Federated%20Learning%20over%20Wireless%20Network.pdf">Federated Learning over Wireless Networks: Optimization Model Design and Analysis</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.09172.pdf">Resource Allocation in Mobility-Aware Federated Learning Networks: A Deep Reinforcement Learning Approach</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.06837.pdf">Reliable Federated Learning for Mobile Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.12567.pdf">Cell-Free Massive MIMO for Wireless Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.07972.pdf">A Joint Learning and Communications Framework for Federated Learning over Wireless Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.06512.pdf">On Safeguarding Privacy and Security in the Framework of Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1908.06287.pdf">Scheduling Policies for Federated Learning in Wireless Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1908.05891.pdf">Federated Learning with Additional Mechanisms on Clients to Reduce Communication Costs</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.06040.pdf">Energy-Efficient Radio Resource Allocation for Federated Edge Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.10893.pdf">Mobile Edge Computing, Blockchain and Reputation-based Crowdsourcing IoT Federated Learning: A Secure, Decentralized and Privacy-preserving System</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.10718.pdf">Active Learning Solution on Distributed Edge Computing</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.04519.pdf">Fast Uplink Grant for NOMA: a Federated Learning based Approach</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1901.00844.pdf">Machine Learning at the Wireless Edge: Distributed Stochastic Gradient Descent Over-the-Air</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.11494.pdf">Broadband Analog Aggregation for Low-Latency Federated Edge Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.01202.pdf">Federated Echo State Learning for Minimizing Breaks in Presence in Wireless Virtual Reality Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.12082.pdf">Joint Service Pricing and Cooperative Relay Communication for Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1809.07857.pdf">In-Edge AI: Intelligentizing Mobile Edge Computing, Caching and Communication by Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.01656.pdf">Asynchronous Task Allocation for Federated and Parallelized Mobile Edge Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.03633">Ask to upload some data from client to server Efficient Training Management for Mobile Crowd-Machine Learning: A Deep Reinforcement Learning Approach</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.11494">Low-latency Broadband Analog Aggregation For Federated Edge Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.09769.pdf">Federated Learning over Wireless Fading Channels</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.11750">Federated Learning via Over-the-Air Computation</a></li>
+</ul>
+<h2 id="Part-11-Federated-with-Deep-learning"><a href="#Part-11-Federated-with-Deep-learning" class="headerlink" title="Part 11: Federated with Deep learning"></a>Part 11: Federated with Deep learning</h2><h3 id="11-1-Neural-Architecture-Search-NAS"><a href="#11-1-Neural-Architecture-Search-NAS" class="headerlink" title="11.1 Neural Architecture Search(NAS)"></a>11.1 Neural Architecture Search(NAS)</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.08546.pdf">FedNAS: Federated Deep Learning via Neural Architecture Search.</a>(CVPR 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.02793.pdf">Real-time Federated Evolutionary Neural Architecture Search.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.06352.pdf">Federated Neural Architecture Search.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.10559.pdf">Differentially-private Federated Neural Architecture Search.</a></li>
+</ul>
+<h3 id="11-2-Graph-Neural-Network-GNN"><a href="#11-2-Graph-Neural-Network-GNN" class="headerlink" title="11.2 Graph Neural Network(GNN)"></a>11.2 Graph Neural Network(GNN)</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/9005983">SGNN: A Graph Neural Network Based Federated Learning Approach by Hiding Structure</a> (Big Data)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2008.11989">GraphFederator: Federated Visual Analysis for Multi-party Graphs.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.12882">FedE: Embedding Knowledge Graphs in Federated Setting</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2011.03248">ASFGNN: Automated Separated-Federated Graph Neural Network</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2012.04187">GraphFL: A Federated Learning Framework for Semi-Supervised Node Classification on Graphs</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1901.11173">Peer-to-peer Federated Learning on Graphs</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.12946">Towards Federated Graph Learning for Collaborative Financial Crimes Detection</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2005.00455v3">Secure Deep Graph Generation with Link Differential Privacy</a> (IJCAI 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.05535.pdf">Locally Private Graph Neural Networks</a> (CCS 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.05535v1.pdf">When Differential Privacy Meets Graph Neural Networks</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2109.08907">Releasing Graph Neural Networks with Differential Privacy</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2005.11903">Vertically Federated Graph Neural Network for Privacy-Preserving Node Classification</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.04925">FedGNN: Federated Graph Neural Network for Privacy-Preserving Recommendation</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://federated-learning.org/fl-ijcai-2021/FTL-IJCAI21_paper_20.pdf">Decentralized Federated Graph Neural Networks</a> (IJCAI 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2106.13423">Federated Graph Classification over Non-IID Graphs</a> (NeurIPS 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2106.02743">SpreadGNN: Serverless Multi-task Federated Learning for Graph Neural Networks</a> (ICML 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.07145">FedGraphNN: A Federated Learning System and Benchmark for Graph Neural Networks</a> (ICLR 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3447548.3467371">Cross-Node Federated Graph Neural Network for Spatio-Temporal Data Modeling</a> (KDD 2021)</li>
+</ul>
+<h2 id="Part-12-FL-system-Library-Courses"><a href="#Part-12-FL-system-Library-Courses" class="headerlink" title="Part 12: FL system &amp; Library &amp; Courses"></a>Part 12: FL system &amp; Library &amp; Courses</h2><h3 id="12-1-System"><a href="#12-1-System" class="headerlink" title="12.1 System"></a>12.1 System</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1902.01046">Towards Federated Learning at Scale: System Design</a> <strong>[Must Read]</strong></li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~muli/file/mu-thesis.pdf">Scaling Distributed Machine Learning with System and Algorithm Co-design</a></li>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8784064">Demonstration of Federated Learning in a Resource-Constrained Networked Environment</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.02903">Applied Federated Learning: Improving Google Keyboard Query Suggestions</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2007.00914">Federated Learning and Differential Privacy: Software tools analysis, the Sherpa.ai FL framework and methodological guidelines for preserving data privacy</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.13518.pdf">FedML: A Research Library and Benchmark for Federated Machine Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.07273.pdf">FLeet: Online Federated Learning via Staleness Awareness and Performance Prediction.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.06983.pdf">Heterogeneity-Aware Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.04150.pdf">Decentralised Learning from Independent Multi-Domain Labels for Person Re-Identification</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.06850.pdf">[startup] Industrial Federated Learning – Requirements and System Design</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.09249.pdf">(*) TiFL: A Tier-based Federated Learning System.</a>(HPDC 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.04756.pdf">Adaptive Gradient Sparsification for Efficient Federated Learning: An Online Learning Approach</a>(ICDCS 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.12795.pdf">Quantifying the Performance of Federated Transfer Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.01684.pdf">ELFISH: Resource-Aware Federated Learning on Heterogeneous Edge Devices</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.04559.pdf">Privacy is What We Care About: Experimental Investigation of Federated Learning on Edge Devices</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.11567.pdf">Substra: a framework for privacy-preserving, traceable and collaborative Machine Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.07452.pdf">BAFFLE : Blockchain Based Aggregator Free Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1808.08143.pdf">Functional Federated Learning in Erlang (ffl-erl)</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.09876.pdf">HierTrain: Fast Hierarchical Edge AI Learning With Hybrid Parallelism in Mobile-Edge-Cloud Computing</a></li>
+<li><a target="_blank" rel="noopener" href="https://petuum.com/wp-content/uploads/2019/01/Orpheus.pdf">Orpheus: Efficient Distributed Machine Learning via System and Algorithm Co-design</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.11112">Scalable Distributed DNN Training using TensorFlow and CUDA-Aware MPI: Characterization, Designs, and Performance Evaluation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1707.09414">Optimized Broadcast for Deep Learning Workloads on Dense-GPU InfiniBand Clusters: MPI or NCCL?</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1902.06855">Optimizing Network Performance for Distributed DNN Training on GPU Clusters: ImageNet&#x2F;AlexNet Training in 1.5 Minutes</a></li>
+</ul>
+<h3 id="12-2-Courses"><a href="#12-2-Courses" class="headerlink" title="12.2 Courses"></a>12.2 Courses</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.udacity.com/course/applied-cryptography--cs387">Applied Cryptography</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://medium.com/georgian-impact-blog/a-brief-introduction-to-differential-privacy-eacf8722283b">A Brief Introduction to Differential Privacy</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://doi.acm.org/10.1145/2976749.2978318">Deep Learning with Differential Privacy.</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://iamtrask.github.io/2017/03/17/safe-ai/">Building Safe A.I.</a></p>
+<ul>
+<li>A Tutorial for Encrypted Deep Learning</li>
+<li>Use Homomorphic Encryption (HE)</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/04/17/private-deep-learning-with-mpc/">Private Deep Learning with MPC</a></p>
+<ul>
+<li>A Simple Tutorial from Scratch</li>
+<li>Use Multiparty Compuation (MPC)</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/09/19/private-image-analysis-with-mpc/">Private Image Analysis with MPC</a></p>
+<ul>
+<li>Training CNNs on Sensitive Data</li>
+<li>Use SPDZ as MPC protocol</li>
+</ul>
+</li>
+</ul>
+<h3 id="13-2-Secret-Sharing"><a href="#13-2-Secret-Sharing" class="headerlink" title="13.2 Secret Sharing"></a>13.2 Secret Sharing</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kkMps3X_tEE">Simple Introduction to Sharmir’s Secret Sharing and Lagrange Interpolation</a></li>
+<li><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/06/04/secret-sharing-part1/">Secret Sharing, Part 1</a>: Shamir’s Secret Sharing &amp; Packed Variant</li>
+<li><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/06/24/secret-sharing-part2/">Secret Sharing, Part 2</a>: Improve efficiency</li>
+<li><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/08/13/secret-sharing-part3/">Secret Sharing, Part 3</a></li>
+</ul>
+<h2 id="Part-13-Secure-Multi-party-Computation-MPC"><a href="#Part-13-Secure-Multi-party-Computation-MPC" class="headerlink" title="Part 13: Secure Multi-party Computation(MPC)"></a>Part 13: Secure Multi-party Computation(MPC)</h2><h3 id="13-1-Differential-Privacy"><a href="#13-1-Differential-Privacy" class="headerlink" title="13.1 Differential Privacy"></a>13.1 Differential Privacy</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.06963">Learning Differentially Private Recurrent Language Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.10071">Federated Learning with Bayesian Differential Privacy</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1912.06733">Private Federated Learning with Domain Adaptation</a> （NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.10559">cpSGD: Communication-efficient and differentially-private distributed SGD</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1611.04482.pdf">Practical Secure Aggregation for Federated Learning on User-Held Data.</a>（NIPS 2016 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1712.07557.pdf">Differentially Private Federated Learning: A Client Level Perspective.</a>（NIPS 2017 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1805.04049.pdf">Exploiting Unintended Feature Leakage in Collaborative Learning.</a>(S&amp;P 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.03224.pdf">A Hybrid Approach to Privacy-Preserving Federated Learning.</a> (AISec 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.04017.pdf">A generic framework for privacy preserving deep learning.</a> (PPML 2018)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.08385.pdf">Federated Generative Privacy.</a>（IJCAI 2019 FL Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.01812.pdf">Enhancing the Privacy of Federated Learning with Sketching.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.05897.pdf">https://aisec.cc/</a></li>
+<li><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v130/zheng21a.html">Federated f-Differential Privacy</a> (AISTATS 2021)</li>
+<li><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v130/girgis21a.html">Shuffled Model of Differential Privacy in Federated Learning</a> (AISTATS 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3459637.3482252">Differentially Private Federated Knowledge Graphs Embedding</a> (CIKM 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.09096.pdf">Anonymizing Data for Privacy-Preserving Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.09843.pdf">Practical and Bilateral Privacy-preserving Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.06612.pdf">Decentralized Policy-Based Private Analytics.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.10637.pdf">FedSel: Federated SGD under Local Differential Privacy with Top-k Dimension Selection.</a> (DASFAA 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.10933.pdf">Learn to Forget: User-Level Memorization Elimination in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.03637.pdf">LDP-Fed: Federated Learning with Local Differential Privacy.</a>（EdgeSys 2020)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.02264.pdf">PrivFL: Practical Privacy-preserving Federated Regressions on High-dimensional Data over Mobile Networks.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.08856.pdf">Local Differential Privacy based Federated Learning for Internet of Things.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.06337.pdf">Differentially Private AirComp Federated Learning with Power Adaptation Harnessing Receiver Noise.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.06567.pdf">Decentralized Differentially Private Segmentation with PATE.</a>（MICCAI 2020 Under Review)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.12108.pdf">Privacy Preserving Distributed Machine Learning with Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.00218.pdf">Exploring Private Federated Learning with Laplacian Smoothing.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.02503.pdf">Information-Theoretic Bounds on the Generalization Error and Privacy Leakage in Federated Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.04563.pdf">Efficient Privacy Preserving Edge Computing Framework for Image Classification.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.02456.pdf">A Distributed Trust Framework for Privacy-Preserving Machine Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.04747.pdf">Secure Byzantine-Robust Machine Learning.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.04593.pdf">ARIANN: Low-Interaction Privacy-Preserving Deep Learning via Function Secret Sharing.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.05459.pdf">Privacy For Free: Wireless Federated Learning Via Uncoded Transmission With Adaptive Power Control.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.07218.pdf">(*) Distributed Differentially Private Averaging with Improved Utility and Robustness to Malicious Parties.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.08848.pdf">GS-WGAN: A Gradient-Sanitized Approach for Learning Differentially Private Generators.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.00222.pdf">Federated Learning with Differential Privacy:Algorithms and Performance Analysis</a></li>
+</ul>
+<h3 id="13-2-Secret-Sharing-1"><a href="#13-2-Secret-Sharing-1" class="headerlink" title="13.2 Secret Sharing"></a>13.2 Secret Sharing</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kkMps3X_tEE">Simple Introduction to Sharmir’s Secret Sharing and Lagrange Interpolation</a></li>
+<li><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/06/04/secret-sharing-part1/">Secret Sharing, Part 1</a>: Shamir’s Secret Sharing &amp; Packed Variant</li>
+<li><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/06/24/secret-sharing-part2/">Secret Sharing, Part 2</a>: Improve efficiency</li>
+<li><a target="_blank" rel="noopener" href="https://mortendahl.github.io/2017/08/13/secret-sharing-part3/">Secret Sharing, Part 3</a></li>
+</ul>
+<h2 id="Part-14-Applications"><a href="#Part-14-Applications" class="headerlink" title="Part 14: Applications"></a>Part 14: Applications</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1907.13113">Federated Learning Approach for Mobile Packet Classification</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.11807">Federated Learning for Ranking Browser History Suggestions</a> (NIPS 2019 Workshop)</li>
+</ul>
+<h3 id="14-1-Healthcare"><a href="#14-1-Healthcare" class="headerlink" title="14.1 Healthcare"></a>14.1 Healthcare</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.05784">HHHFL: Hierarchical Heterogeneous Horizontal Federated Learning for Electroencephalography</a> (NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1912.01792">Learn Electronic Health Records by Fully Decentralized Federated Learning</a> (NIPS 2019 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3447548.3467185">FLOP: Federated Learning on Medical Datasets using Partial Networks</a> (KDD 2021)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/ftp/arxiv/papers/1903/1903.09296.pdf">Patient Clustering Improves Efficiency of Federated Machine Learning to predict mortality and hospital stay time using distributed Electronic Medical Records</a> <a target="_blank" rel="noopener" href="https://venturebeat.com/2019/03/25/federated-learning-technique-predicts-hospital-stay-and-patient-mortality/">[News]</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pubmed/29500022">Federated learning of predictive models from federated Electronic Health Records.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.09173.pdf">FedHealth: A Federated Transfer Learning Framework for Wearable Healthcare</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1810.04304.pdf">Multi-Institutional Deep Learning Modeling Without Sharing Patient Data: A Feasibility Study on Brain Tumor Segmentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://blogs.nvidia.com/blog/2019/12/01/clara-federated-learning/">NVIDIA Clara Federated Learning to Deliver AI to Hospitals While Protecting Patient Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://blogs.nvidia.com/blog/2019/10/13/what-is-federated-learning/">What is Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.00564">Split learning for health: Distributed deep learning without sharing raw patient data</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.aclweb.org/anthology/W19-5030.pdf">Two-stage Federated Phenotyping and Patient Representation Learning</a> (ACL 2019)</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3097983.3098118">Federated Tensor Factorization for Computational Phenotyping</a> (SIGKDD 2017)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1907.09173">FedHealth- A Federated Transfer Learning Framework for Wearable Healthcare</a> (ICJAI 2019 workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.04304">Multi-Institutional Deep Learning Modeling Without Sharing Patient Data- A Feasibility Study on Brain Tumor Segmentation</a> (MICCAI’18 Workshop)</li>
+<li><a target="_blank" rel="noopener" href="https://aaai.org/ojs/index.php/AAAI/article/view/6121">Federated Patient Hashing</a> (AAAI 2020)</li>
+</ul>
+<h3 id="14-2-Natual-Language-Processing"><a href="#14-2-Natual-Language-Processing" class="headerlink" title="14.2 Natual Language Processing"></a>14.2 Natual Language Processing</h3><p>Google</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1811.03604">Federated Learning for Mobile Keyboard Prediction</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.02903">Applied Federated Learning: Improving Google Keyboard Query Suggestions</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1903.10635">Federated Learning Of Out-Of-Vocabulary Words</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.04329">Federated Learning for Emoji Prediction in a Mobile Keyboard</a></li>
+</ul>
+<p>Snips</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1810.05512.pdf">Federated Learning for Wake Keyword Spotting</a> <a target="_blank" rel="noopener" href="https://medium.com/snips-ai/federated-learning-for-wake-word-detection-c8b8c5cdd2c5">[Blog]</a> <a target="_blank" rel="noopener" href="https://github.com/snipsco/keyword-spotting-research-datasets">[Github]</a></li>
+</ul>
+<h3 id="14-3-Computer-Vision"><a href="#14-3-Computer-Vision" class="headerlink" title="14.3 Computer Vision"></a>14.3 Computer Vision</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2008.11560">Performance Optimization for Federated Person Re-identification via Benchmark Analysis</a> (ACMMM 2020) <a target="_blank" rel="noopener" href="https://github.com/cap-ntu/FedReID">[Github]</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.11089">Real-World Image Datasets for Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2001.06202">FedVision- An Online Visual Object Detection Platform Powered by Federated Learning</a> (IAAI20)</li>
+<li><a target="_blank" rel="noopener" href="http://web.pkusz.edu.cn/adsp/files/2019/11/AAAI-FenglinL.1027.pdf">Federated Learning for Vision-and-Language Grounding Problems</a> (AAAI20)</li>
+</ul>
+<h3 id="14-4-Recommendation"><a href="#14-4-Recommendation" class="headerlink" title="14.4 Recommendation"></a>14.4 Recommendation</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1901.09888">Federated Collaborative Filtering for Privacy-Preserving Personalized Recommendation System</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1802.07876">Federated Meta-Learning with Fast Convergence and Efficient Communication</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.05108">Secure Federated Matrix Factorization</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~muli/file/difacto.pdf">DiFacto: Distributed Factorization Machines</a></li>
+</ul>
+<h3 id="14-5-Industrial"><a href="#14-5-Industrial" class="headerlink" title="14.5 Industrial"></a>14.5 Industrial</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/matthiaslau/Turbofan-Federated-Learning-POC">Turbofan POC: Predictive Maintenance of Turbofan Engines using Federated Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://turbofan.fastforwardlabs.com/">Turbofan Tycoon Simulation by Cloudera&#x2F;FastForwardLabs</a></li>
+<li><a target="_blank" rel="noopener" href="https://florian.github.io/federated-learning/">Firefox Search Bar</a></li>
+</ul>
+<h2 id="Part-15-Organizations-and-Companies"><a href="#Part-15-Organizations-and-Companies" class="headerlink" title="Part 15: Organizations and Companies"></a>Part 15: Organizations and Companies</h2><h3 id="15-1-国内篇"><a href="#15-1-国内篇" class="headerlink" title="15.1 国内篇"></a>15.1 国内篇</h3><h5 id="微众银行开源-FATE-框架"><a href="#微众银行开源-FATE-框架" class="headerlink" title="微众银行开源 FATE 框架."></a>微众银行开源 <a target="_blank" rel="noopener" href="https://github.com/FederatedAI/FATE">FATE</a> 框架.</h5><p>Qiang Yang, Tianjian Chen, Yang Liu, Yongxin Tong.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/3298981">《Federated machine learning: Concept and applications》</a></li>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/9440789">《Secureboost: A lossless federated learning framework》</a></li>
+</ul>
+<h5 id="字节跳动开源-FedLearner-框架"><a href="#字节跳动开源-FedLearner-框架" class="headerlink" title="字节跳动开源 FedLearner 框架."></a>字节跳动开源 <a target="_blank" rel="noopener" href="https://github.com/bytedance/fedlearner">FedLearner</a> 框架.</h5><p>Jiankai Sun, Weihao Gao, Hongyi Zhang, Junyuan Xie.<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2102.08504.pdf">《Label Leakage and Protection in Two-party Split learning》</a></p>
+<h5 id="华控清交-PrivPy-多方计算平台"><a href="#华控清交-PrivPy-多方计算平台" class="headerlink" title="华控清交 PrivPy 多方计算平台"></a>华控清交 PrivPy 多方计算平台</h5><p>Yi Li, Wei Xu.<a target="_blank" rel="noopener" href="https://dl.acm.org/doi/pdf/10.1145/3292500.3330920">《PrivPy: General and Scalable Privacy-Preserving Data Mining》</a></p>
+<h5 id="同盾科技-同盾志邦知识联邦平台"><a href="#同盾科技-同盾志邦知识联邦平台" class="headerlink" title="同盾科技 同盾志邦知识联邦平台"></a>同盾科技 同盾志邦知识联邦平台</h5><p>Hongyu Li, Dan Meng, Hong Wang, Xiaolin Li.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9194566">《Knowledge Federation: A Unified and Hierarchical Privacy-Preserving AI Framework》</a></li>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9408024">《FedMONN: Meta Operation Neural Network for Secure Federated Aggregation》</a></li>
+</ul>
+<h5 id="百度-MesaTEE-安全计算平台"><a href="#百度-MesaTEE-安全计算平台" class="headerlink" title="百度 MesaTEE 安全计算平台"></a>百度 <a target="_blank" rel="noopener" href="https://anquan.baidu.com/product/mesatee">MesaTEE</a> 安全计算平台</h5><p>Tongxin Li, Yu Ding, Yulong Zhang, Tao Wei.<a target="_blank" rel="noopener" href="https://www.ieee-security.org/TC/SP2019/posters/hotcrp_sp19posters-final11.pdf">《gbdt-rs: Fast and Trustworthy Gradient Boosting Decision Tree》</a></p>
+<h5 id="矩阵元-Rosetta-隐私开源框架"><a href="#矩阵元-Rosetta-隐私开源框架" class="headerlink" title="矩阵元 Rosetta 隐私开源框架"></a>矩阵元 <a target="_blank" rel="noopener" href="https://github.com/LatticeX-Foundation/Rosetta">Rosetta</a> 隐私开源框架</h5><h5 id="百度-PaddlePaddle-开源联邦学习框架"><a href="#百度-PaddlePaddle-开源联邦学习框架" class="headerlink" title="百度 PaddlePaddle 开源联邦学习框架"></a>百度 <a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/PaddleFL">PaddlePaddle</a> 开源联邦学习框架</h5><h5 id="蚂蚁区块链科技-蚂蚁链摩斯安全计算平台"><a href="#蚂蚁区块链科技-蚂蚁链摩斯安全计算平台" class="headerlink" title="蚂蚁区块链科技 蚂蚁链摩斯安全计算平台"></a>蚂蚁区块链科技 <a target="_blank" rel="noopener" href="https://antchain.antgroup.com/products/morse">蚂蚁链摩斯安全计算平台</a></h5><h5 id="阿里云-DataTrust-隐私增强计算平台"><a href="#阿里云-DataTrust-隐私增强计算平台" class="headerlink" title="阿里云 DataTrust 隐私增强计算平台"></a>阿里云 <a target="_blank" rel="noopener" href="https://dp.alibaba.com/index">DataTrust</a> 隐私增强计算平台</h5><h5 id="百度百度点石联邦学习平台"><a href="#百度百度点石联邦学习平台" class="headerlink" title="百度百度点石联邦学习平台"></a>百度百度点石联邦学习平台</h5><h5 id="富数科技-阿凡达安全计算平台"><a href="#富数科技-阿凡达安全计算平台" class="headerlink" title="富数科技 阿凡达安全计算平台"></a>富数科技 阿凡达安全计算平台</h5><h5 id="香港理工大学"><a href="#香港理工大学" class="headerlink" title="香港理工大学"></a>香港理工大学</h5><p><a target="_blank" rel="noopener" href="https://ojs.aaai.org//index.php/AAAI/article/view/7021">《FedVision: An Online Visual Object Detection Platform Powered by Federated Learning》</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/atc20-zhang-chengliang.pdf">《BatchCrypt: Efficient Homomorphic Encryption for Cross-Silo Federated Learning》</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.09933.pdf">《Abnormal Client Behavior Detection in Federated Learning》</a></p>
+<h5 id="北京航空航天大学"><a href="#北京航空航天大学" class="headerlink" title="北京航空航天大学"></a>北京航空航天大学</h5><p><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/3298981">《Federated machine learning: Concept and applications》</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2101.11715.pdf">《Failure Prediction in Production Line Based on Federated Learning: An Empirical Study》</a></p>
+<h3 id="15-2-国际篇"><a href="#15-2-国际篇" class="headerlink" title="15.2 国际篇"></a>15.2 国际篇</h3><p>Google 提出 Federated Learning.<br>H. Brendan McMahan. Daniel Ramage. Jakub Konečný. Kallista A. Bonawitz. Hubert Eichner.</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1602.05629">《Communication-efficient learning of deep networks from decentralized data》</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1610.05492">《Federated Learning: Strategies for Improving Communication Efficiency》</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.04977.pdf">《Advances and Open Problems in Federated Learning》</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1902.01046">《Towards Federated Learning at Scale: System Design》</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.03871.pdf">《Differentially Private Learning with Adaptive Clipping》</a></p>
+<p>……（更多联邦学习相关文章请自行搜索 Google Scholar）</p>
+<h4 id="Cornell-University"><a href="#Cornell-University" class="headerlink" title="Cornell University."></a>Cornell University.</h4><p>Antonio Marcedone.</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1611.04482.pdf">《Practical Secure Aggregation for Federated Learning on User-Held Data》</a></p>
+<p><a target="_blank" rel="noopener" href="https://academic.microsoft.com/paper/2949130532/citedby/search?q=Practical%20Secure%20Aggregation%20for%20Privacy%20Preserving%20Machine%20Learning.&qe=RId%253D2949130532&f=&orderBy=0">《Practical Secure Aggregation for Privacy-Preserving Machine Learning》</a></p>
+<p>Eugene Bagdasaryan, Andreas Veit, Yiqing Hua, Deborah Estrin, Vitaly Shmatikov.</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1807.00459.pdf">《How To Backdoor Federated Learning》</a></p>
+<p><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2019/hash/fc0de4e0396fff257ea362983c2dda5a-Abstract.html">《Differential privacy has disparate impact on model accuracy》</a></p>
+<p>Ziteng Sun.</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.07963">《Can you really backdoor federated learning?》</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Cameilla</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/07/08/README/">http://example.com/2024/07/08/README/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/2.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/07/08/index/" title="liberary"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">liberary</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/2.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cameilla</div><div class="author-info__description">海不迎我自来也</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Federated-Learning"><span class="toc-number">1.</span> <span class="toc-text">Federated Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-1-Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Part 1: Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-2-Survey"><span class="toc-number">1.2.</span> <span class="toc-text">Part 2: Survey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-3-Benchmarks"><span class="toc-number">1.3.</span> <span class="toc-text">Part 3: Benchmarks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-4-Converge"><span class="toc-number">1.4.</span> <span class="toc-text">Part 4: Converge</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Model-Aggregation"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 Model Aggregation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Convergence-Research"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 Convergence Research</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Statistical-Heterogeneity"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 Statistical Heterogeneity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-Adaptive-Aggregation"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 Adaptive Aggregation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-5-Security"><span class="toc-number">1.5.</span> <span class="toc-text">Part 5: Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Adversarial-Attacks"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 Adversarial Attacks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Data-Privacy-and-Confidentiality"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 Data Privacy and Confidentiality</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-6-Communication-Efficiency"><span class="toc-number">1.6.</span> <span class="toc-text">Part 6: Communication Efficiency</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-Compression"><span class="toc-number">1.6.1.</span> <span class="toc-text">6.1 Compression</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-7-Personalized-Federated-Learning"><span class="toc-number">1.7.</span> <span class="toc-text">Part 7: Personalized Federated Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-Meta-Learning"><span class="toc-number">1.7.1.</span> <span class="toc-text">7.1 Meta Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-Multi-task-Learning"><span class="toc-number">1.7.2.</span> <span class="toc-text">7.2 Multi-task Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-Hierarchical-FL"><span class="toc-number">1.7.3.</span> <span class="toc-text">7.3 Hierarchical FL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-Transfer-Learning"><span class="toc-number">1.7.4.</span> <span class="toc-text">7.4 Transfer Learning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-8-Decentralization-Incentive-Mechanism"><span class="toc-number">1.8.</span> <span class="toc-text">Part 8 Decentralization &amp; Incentive Mechanism</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-Decentralized"><span class="toc-number">1.8.1.</span> <span class="toc-text">8.1 Decentralized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-Incentive-Mechanism"><span class="toc-number">1.8.2.</span> <span class="toc-text">8.2 Incentive Mechanism</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-9-Vertical-Federated-Learning"><span class="toc-number">1.9.</span> <span class="toc-text">Part 9: Vertical Federated Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-10-Wireless-Communication-and-Cloud-Computing"><span class="toc-number">1.9.1.</span> <span class="toc-text">Part 10: Wireless Communication and Cloud Computing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-11-Federated-with-Deep-learning"><span class="toc-number">1.10.</span> <span class="toc-text">Part 11: Federated with Deep learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-Neural-Architecture-Search-NAS"><span class="toc-number">1.10.1.</span> <span class="toc-text">11.1 Neural Architecture Search(NAS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-Graph-Neural-Network-GNN"><span class="toc-number">1.10.2.</span> <span class="toc-text">11.2 Graph Neural Network(GNN)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-12-FL-system-Library-Courses"><span class="toc-number">1.11.</span> <span class="toc-text">Part 12: FL system &amp; Library &amp; Courses</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-System"><span class="toc-number">1.11.1.</span> <span class="toc-text">12.1 System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-Courses"><span class="toc-number">1.11.2.</span> <span class="toc-text">12.2 Courses</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-Secret-Sharing"><span class="toc-number">1.11.3.</span> <span class="toc-text">13.2 Secret Sharing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-13-Secure-Multi-party-Computation-MPC"><span class="toc-number">1.12.</span> <span class="toc-text">Part 13: Secure Multi-party Computation(MPC)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-Differential-Privacy"><span class="toc-number">1.12.1.</span> <span class="toc-text">13.1 Differential Privacy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-Secret-Sharing-1"><span class="toc-number">1.12.2.</span> <span class="toc-text">13.2 Secret Sharing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-14-Applications"><span class="toc-number">1.13.</span> <span class="toc-text">Part 14: Applications</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-1-Healthcare"><span class="toc-number">1.13.1.</span> <span class="toc-text">14.1 Healthcare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-2-Natual-Language-Processing"><span class="toc-number">1.13.2.</span> <span class="toc-text">14.2 Natual Language Processing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-3-Computer-Vision"><span class="toc-number">1.13.3.</span> <span class="toc-text">14.3 Computer Vision</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-4-Recommendation"><span class="toc-number">1.13.4.</span> <span class="toc-text">14.4 Recommendation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-5-Industrial"><span class="toc-number">1.13.5.</span> <span class="toc-text">14.5 Industrial</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-15-Organizations-and-Companies"><span class="toc-number">1.14.</span> <span class="toc-text">Part 15: Organizations and Companies</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-1-%E5%9B%BD%E5%86%85%E7%AF%87"><span class="toc-number">1.14.1.</span> <span class="toc-text">15.1 国内篇</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BE%AE%E4%BC%97%E9%93%B6%E8%A1%8C%E5%BC%80%E6%BA%90-FATE-%E6%A1%86%E6%9E%B6"><span class="toc-number">1.14.1.0.1.</span> <span class="toc-text">微众银行开源 FATE 框架.</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%BC%80%E6%BA%90-FedLearner-%E6%A1%86%E6%9E%B6"><span class="toc-number">1.14.1.0.2.</span> <span class="toc-text">字节跳动开源 FedLearner 框架.</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%8E%E6%8E%A7%E6%B8%85%E4%BA%A4-PrivPy-%E5%A4%9A%E6%96%B9%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.14.1.0.3.</span> <span class="toc-text">华控清交 PrivPy 多方计算平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E7%9B%BE%E7%A7%91%E6%8A%80-%E5%90%8C%E7%9B%BE%E5%BF%97%E9%82%A6%E7%9F%A5%E8%AF%86%E8%81%94%E9%82%A6%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.14.1.0.4.</span> <span class="toc-text">同盾科技 同盾志邦知识联邦平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%99%BE%E5%BA%A6-MesaTEE-%E5%AE%89%E5%85%A8%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.14.1.0.5.</span> <span class="toc-text">百度 MesaTEE 安全计算平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E5%85%83-Rosetta-%E9%9A%90%E7%A7%81%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6"><span class="toc-number">1.14.1.0.6.</span> <span class="toc-text">矩阵元 Rosetta 隐私开源框架</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%99%BE%E5%BA%A6-PaddlePaddle-%E5%BC%80%E6%BA%90%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6"><span class="toc-number">1.14.1.0.7.</span> <span class="toc-text">百度 PaddlePaddle 开源联邦学习框架</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%9A%82%E8%9A%81%E5%8C%BA%E5%9D%97%E9%93%BE%E7%A7%91%E6%8A%80-%E8%9A%82%E8%9A%81%E9%93%BE%E6%91%A9%E6%96%AF%E5%AE%89%E5%85%A8%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.14.1.0.8.</span> <span class="toc-text">蚂蚁区块链科技 蚂蚁链摩斯安全计算平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91-DataTrust-%E9%9A%90%E7%A7%81%E5%A2%9E%E5%BC%BA%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.14.1.0.9.</span> <span class="toc-text">阿里云 DataTrust 隐私增强计算平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%99%BE%E5%BA%A6%E7%99%BE%E5%BA%A6%E7%82%B9%E7%9F%B3%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.14.1.0.10.</span> <span class="toc-text">百度百度点石联邦学习平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%8C%E6%95%B0%E7%A7%91%E6%8A%80-%E9%98%BF%E5%87%A1%E8%BE%BE%E5%AE%89%E5%85%A8%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="toc-number">1.14.1.0.11.</span> <span class="toc-text">富数科技 阿凡达安全计算平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A6%99%E6%B8%AF%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6"><span class="toc-number">1.14.1.0.12.</span> <span class="toc-text">香港理工大学</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8C%97%E4%BA%AC%E8%88%AA%E7%A9%BA%E8%88%AA%E5%A4%A9%E5%A4%A7%E5%AD%A6"><span class="toc-number">1.14.1.0.13.</span> <span class="toc-text">北京航空航天大学</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-2-%E5%9B%BD%E9%99%85%E7%AF%87"><span class="toc-number">1.14.2.</span> <span class="toc-text">15.2 国际篇</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cornell-University"><span class="toc-number">1.14.2.1.</span> <span class="toc-text">Cornell University.</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/README/" title="联邦学习">联邦学习</a><time datetime="2024-07-08T12:34:13.648Z" title="Created 2024-07-08 20:34:13">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/index/" title="liberary">liberary</a><time datetime="2024-07-08T09:20:28.000Z" title="Created 2024-07-08 17:20:28">2024-07-08</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2024/07/07/hello-world/" title="Hello World">Hello World</a><time datetime="2024-07-07T12:16:48.622Z" title="Created 2024-07-07 20:16:48">2024-07-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Cameilla</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script src="/styles/fish.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
