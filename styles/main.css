@@ -92,7 +92,7 @@ rgba(24,40,72,.2));
 } */
 /*主页文章预览页面*/
 #recent-posts>.recent-post-item{
-    background: linear-gradient(-45deg, rgba(225, 255, 252, 0.8),
+    background: linear-gradient(-45deg, rgba(12, 23, 22, 0.8),
     rgba(255, 225, 229, 0.9),
     rgba(225, 255, 225, 0.9),
     rgba(253, 255, 225, 0.8));
