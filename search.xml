@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Thesis_Reading</title>
+      <link href="/2024/07/15/Time-Series/"/>
+      <url>/2024/07/15/Time-Series/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Time-Series-Contrastive-Learning-with-Information-Aware-Augmentations"><a href="#Time-Series-Contrastive-Learning-with-Information-Aware-Augmentations" class="headerlink" title="Time Series Contrastive Learning with Information-Aware Augmentations"></a><strong>Time Series Contrastive Learning with Information-Aware Augmentations</strong></h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>背景：在近年来，已经有许多对比学习方法被提出，并在实证上取得了显著的成功。</p><p>尽管对比学习在图像和语言领域非常有效和普遍，但在时间序列数据上的应用相对较少。<br>对比学习的关键组成部分：</p><p>对比学习的一个关键组成部分是选择适当的数据增强（augmentation）方式，通过施加一些先验条件构建可行的正样本。这样，编码器可以通过训练来学习稳健和具有区分性的表示。<br>问题陈述：</p><p>与图像和语言领域不同，时间序列数据的“期望”增强样本很难通过人为的先验条件来生成，因为时间序列数据具有多样且人类难以识别的时间结构。如何为给定的对比学习任务和数据集找到对时间序列数据有意义的增强仍然是一个未解的问题。</p><p>解决方法：作者通过信息理论提出了一种方法，旨在同时鼓励高保真度和多样性，从而产生有意义的时间序列数据增强。通过理论分析，提出了选择可行数据增强的标准。</p><p>新方法提出：作者提出了一种新的对比学习方法，名为InfoTS，该方法使用信息感知的增强（information-aware augmentations），能够自适应地选择最优的增强方式用于时间序列表示学习。</p><p>实验证明：在各种数据集上的实验表明，该方法在预测任务上能够实现高竞争性的性能，减少了均方误差（MSE）高达12.0%。在分类任务上相对于主流基线方法，准确度提高了最高达3.7%。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>联邦学习</title>
       <link href="/2024/07/08/README/"/>
       <url>/2024/07/08/README/</url>
